@@ -1,0 +1,10 @@
+{
+  "description": "Create fully responsive headers that adapt seamlessly across all devices, ensuring optimal font sizes and a consistent user experience for web designers.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
