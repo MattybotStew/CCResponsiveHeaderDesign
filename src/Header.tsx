@@ -187,7 +187,7 @@ export default function Header() {
                 </div>
               );
             })}
-            <button aria-label="Search" className="ml-1 flex items-center justify-center text-[#6a6c74] hover:text-[#2a2a2e] transition-colors">
+            <button aria-label="Search" className="ml-1 w-[50px] h-[50px] bg-[#f5f5f5] rounded-none self-center flex items-center justify-center flex-shrink-0 text-[#6a6c74] hover:text-[#2a2a2e] transition-colors">
               <SearchIcon className="w-[18px] h-[18px]" />
             </button>
           </nav>
@@ -280,8 +280,8 @@ export default function Header() {
                 placeholder="Search..."
                 className="flex-1 min-w-0 px-5 py-4 font-normal text-[#6a6c74] text-[14px] tracking-[1px] uppercase placeholder:text-[#6a6c74] outline-none bg-white text-center border-0"
               />
-              <button aria-label="Search" className="w-[50px] h-[50px] bg-[#ffe513] flex items-center justify-center flex-shrink-0">
-                <svg fill="none" viewBox="0 0 24.4795 36.3064" className="w-[20px] h-[20px]">
+              <button aria-label="Search" className="w-[50px] h-[50px] bg-[#ffe513] rounded-none flex items-center justify-center flex-shrink-0">
+                <svg fill="none" viewBox="0 0 24.4795 36.3064" className="w-[20px] h-[20px] rotate-180">
                   <path d={mobilePaths.pb114000} fill="#6A6C74" />
                 </svg>
               </button>
