@@ -75,7 +75,7 @@ const dropdownMap: Record<string, string[]> = {
 };
 
 const navLinkClass =
-  "font-normal text-[#6a6c74] tracking-[1px] uppercase leading-6 whitespace-nowrap opacity-50 hover:opacity-100 transition-all duration-150";
+  "font-normal text-[#6a6c74] tracking-[1px] uppercase leading-6 whitespace-nowrap opacity-50 hover:font-bold transition-all duration-150";
 
 const mobileItemClass =
   "font-normal text-[#6a6c74] tracking-[1px] uppercase leading-6 text-[14px]";
@@ -89,6 +89,7 @@ export default function Header() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [searchActive, setSearchActive] = useState(false);
 
   function toggleMenu() {
     setMenuOpen((open) => {
@@ -146,7 +147,7 @@ export default function Header() {
                   >
                     {item}
                     {isActive && (
-                      <span className={`absolute bottom-0 left-0 right-0 h-[4px] bg-[#ffe513] transition-opacity duration-700 ${fadingItem === item ? "opacity-0" : "opacity-100"}`} />
+                      <span className={`absolute bottom-[-12px] left-0 right-0 h-[4px] bg-[#ffe513] transition-opacity duration-700 ${fadingItem === item ? "opacity-0" : "opacity-100"}`} />
                     )}
                     {!isActive && (
                       <span className="absolute bottom-[-12px] left-1/2 -translate-x-1/2 w-[10px] h-[10px] bg-[#ffe513] opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
@@ -162,8 +163,7 @@ export default function Header() {
                       >
                         {dropdownMap[item].map((label, i) => (
                           <a key={label} href={`/${item.toLowerCase()}/${label.toLowerCase().replace(/\s+/g, "-")}`}
-                            className={`group relative block px-6 py-4 font-normal text-[#6a6c74] text-[13px] tracking-[1px] uppercase transition-all duration-200 opacity-50 hover:opacity-100 hover:bg-[#f9f7f4] border-t border-[#e8e8ea] ${i < 2 ? "border-t-0" : ""}`}>
-                            <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#ffe513] scale-y-0 group-hover:scale-y-100 transition-transform duration-200 origin-center" />
+                            className={`relative block px-6 py-4 font-normal text-[#6a6c74] text-[13px] tracking-[1px] uppercase transition-all duration-200 opacity-50 hover:opacity-100 hover:font-bold hover:bg-[#f9f7f4] border-t border-[#e8e8ea] ${i < 2 ? "border-t-0" : ""}`}>
                             {label}
                           </a>
                         ))}
@@ -176,8 +176,7 @@ export default function Header() {
                       >
                         {dropdownMap[item].map((label, i) => (
                           <a key={label} href={`/${item.toLowerCase()}/${label.toLowerCase().replace(/\s+/g, "-")}`}
-                            className={`group relative block px-6 py-5 font-normal text-[#6a6c74] text-[13px] tracking-[1px] uppercase transition-all duration-200 opacity-50 hover:opacity-100 hover:bg-[#f9f7f4] ${i > 0 ? "border-t border-[#e8e8ea]" : ""}`}>
-                            <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#ffe513] scale-y-0 group-hover:scale-y-100 transition-transform duration-200 origin-center" />
+                            className={`relative block px-6 py-5 font-normal text-[#6a6c74] text-[13px] tracking-[1px] uppercase transition-all duration-200 opacity-50 hover:opacity-100 hover:font-bold hover:bg-[#f9f7f4] ${i > 0 ? "border-t border-[#e8e8ea]" : ""}`}>
                             {label}
                           </a>
                         ))}
@@ -187,7 +186,11 @@ export default function Header() {
                 </div>
               );
             })}
-            <button aria-label="Search" className="ml-1 w-[50px] h-[50px] bg-[#f5f5f5] rounded-none self-center flex items-center justify-center flex-shrink-0 text-[#6a6c74] hover:text-[#2a2a2e] transition-colors">
+            <button
+              aria-label="Search"
+              onClick={() => setSearchActive((active) => !active)}
+              className={`ml-1 w-[50px] h-[50px] rounded-none self-center flex items-center justify-center flex-shrink-0 text-[#6a6c74] hover:text-[#2a2a2e] transition-colors ${searchActive ? "bg-[#ffe513]" : "bg-[#f5f5f5]"}`}
+            >
               <SearchIcon className="w-[18px] h-[18px]" />
             </button>
           </nav>
