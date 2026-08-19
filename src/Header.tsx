@@ -88,7 +88,14 @@ export default function Header() {
   const fadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [mobileExpanded, setMobileExpanded] = useState<string | null>("People");
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+
+  function toggleMenu() {
+    setMenuOpen((open) => {
+      if (!open) setMobileExpanded(null);
+      return !open;
+    });
+  }
 
   function showDropdown(item: string) {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -105,7 +112,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-white w-full border-b border-[#e8e8ea] relative z-50">
+      <header className={`bg-white w-full border-b border-[#e8e8ea] relative z-50 ${menuOpen ? "max-lg:hidden" : ""}`}>
         <div className="flex items-center justify-between px-5 md:px-8 lg:px-10 h-[90px] max-w-[1720px] mx-auto">
           {/* Logo */}
           <a href="/" aria-label="Cooper Carry home" className="flex-shrink-0" style={{ transform: "scale(0.75)", transformOrigin: "left center" }}>
@@ -185,30 +192,11 @@ export default function Header() {
             </button>
           </nav>
 
-          {/* Tablet nav */}
-          <nav className="hidden md:flex lg:hidden items-center gap-4">
-            {["People", "Services", "Insights", "Firm"].map((item) => (
-              <a key={item} href={`/${item.toLowerCase()}`} className={`${navLinkClass} text-[11px]`}>{item}</a>
-            ))}
-            <button aria-label="Search" className="text-[#6a6c74] hover:text-[#2a2a2e] transition-colors flex items-center">
-              <SearchIcon className="w-[18px] h-[18px]" />
-            </button>
-            <button
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="text-[#6a6c74] hover:text-[#2a2a2e] transition-colors flex flex-col gap-[5px] p-1 ml-1"
-            >
-              <span className="block w-[18px] h-[1.5px] bg-[#6a6c74]" />
-              <span className="block w-[18px] h-[1.5px] bg-[#6a6c74]" />
-              <span className="block w-[18px] h-[1.5px] bg-[#6a6c74]" />
-            </button>
-          </nav>
-
-          {/* Mobile hamburger */}
+          {/* Mobile / tablet hamburger */}
           <button
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="flex md:hidden text-[#6a6c74] flex-col gap-[5px] p-1"
+            onClick={toggleMenu}
+            className="flex lg:hidden text-[#6a6c74] flex-col gap-[5px] p-1"
           >
             <span className="block w-5 h-[1.5px] bg-[#6a6c74]" />
             <span className="block w-5 h-[1.5px] bg-[#6a6c74]" />
@@ -220,27 +208,25 @@ export default function Header() {
       {/* Mobile full-screen overlay */}
       {menuOpen && (
         <div className="lg:hidden fixed inset-0 z-[100] bg-white flex flex-col overflow-y-auto">
-          {/* Mobile header bar */}
-          <div className="flex items-center justify-between h-[60px] shrink-0 px-[10px] relative">
-            <div className="flex-1" />
-            <a href="/" aria-label="Cooper Carry home" className="absolute left-1/2 -translate-x-1/2" style={{ transform: "translateX(-50%) scale(0.82)", transformOrigin: "center center" }}>
+          {/* Mobile header bar — matches closed header layout */}
+          <div className="flex items-center justify-between px-5 h-[90px] shrink-0 border-b border-[#e8e8ea] bg-white">
+            <a href="/" aria-label="Cooper Carry home" className="flex-shrink-0" style={{ transform: "scale(0.75)", transformOrigin: "left center" }}>
               <CooperCarryLogo />
             </a>
             <button
               aria-label="Close menu"
               onClick={() => setMenuOpen(false)}
-              className="relative z-10 flex-shrink-0 w-[60px] h-[60px] bg-[#ffe513] flex items-center justify-center ml-auto"
+              className="flex lg:hidden text-[#6a6c74] p-1"
             >
               <svg fill="none" viewBox="0 0 20 20" className="w-5 h-5" strokeLinecap="round">
-                <line x1="1" y1="1" x2="19" y2="19" stroke="black" strokeWidth="1.5" />
-                <line x1="19" y1="1" x2="1" y2="19" stroke="black" strokeWidth="1.5" />
+                <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" strokeWidth="1.5" />
+                <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" strokeWidth="1.5" />
               </svg>
             </button>
           </div>
 
           {/* Nav list */}
           <div className="flex flex-col px-5 pt-2 pb-4 flex-1">
-            <div className="w-full h-px bg-[#d9d9d9]" />
             {navItems.map((item) => {
               const hasDrop = item in dropdownMap;
               const isExpanded = mobileExpanded === item;
@@ -287,17 +273,19 @@ export default function Header() {
           </div>
 
           {/* Search bar */}
-          <div className="flex items-center shrink-0 border-t border-[#e8e8ea]">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="flex-1 px-5 py-4 font-normal text-[#6a6c74] text-[14px] tracking-[1px] uppercase placeholder:text-[#6a6c74] outline-none bg-white text-center"
-            />
-            <button aria-label="Search" className="w-[50px] h-[50px] bg-[#ffe513] flex items-center justify-center flex-shrink-0">
-              <svg fill="none" viewBox="0 0 24.4795 36.3064" className="w-[20px] h-[20px]">
-                <path d={mobilePaths.pb114000} fill="#000" />
-              </svg>
-            </button>
+          <div className="shrink-0 p-5 bg-[#f9f7f4]">
+            <div className="flex items-stretch border border-[#d9d9d9] bg-white">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="flex-1 min-w-0 px-5 py-4 font-normal text-[#6a6c74] text-[14px] tracking-[1px] uppercase placeholder:text-[#6a6c74] outline-none bg-white text-center border-0"
+              />
+              <button aria-label="Search" className="w-[50px] h-[50px] bg-[#ffe513] flex items-center justify-center flex-shrink-0">
+                <svg fill="none" viewBox="0 0 24.4795 36.3064" className="w-[20px] h-[20px]">
+                  <path d={mobilePaths.pb114000} fill="#6A6C74" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       )}
