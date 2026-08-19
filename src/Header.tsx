@@ -75,7 +75,7 @@ const dropdownMap: Record<string, string[]> = {
 };
 
 const navLinkClass =
-  "font-normal text-[#6a6c74] tracking-[1px] uppercase leading-6 whitespace-nowrap opacity-50 hover:font-bold transition-all duration-150";
+  "font-normal text-[#6a6c74] tracking-[1px] uppercase leading-6 whitespace-nowrap opacity-75 hover:font-bold transition-all duration-150";
 
 const mobileItemClass =
   "font-normal text-[#6a6c74] tracking-[1px] uppercase leading-6 text-[14px]";
@@ -163,7 +163,7 @@ export default function Header() {
                       >
                         {dropdownMap[item].map((label, i) => (
                           <a key={label} href={`/${item.toLowerCase()}/${label.toLowerCase().replace(/\s+/g, "-")}`}
-                            className={`relative block px-6 py-4 font-normal text-[#6a6c74] text-[13px] tracking-[1px] uppercase transition-all duration-200 opacity-50 hover:opacity-100 hover:font-bold hover:bg-[#f9f7f4] border-t border-[#e8e8ea] ${i < 2 ? "border-t-0" : ""}`}>
+                            className={`relative block px-6 py-4 font-normal text-[#6a6c74] text-[13px] tracking-[1px] uppercase transition-all duration-200 opacity-75 hover:opacity-100 hover:font-bold hover:bg-[#f9f7f4] border-t border-[#e8e8ea] ${i < 2 ? "border-t-0" : ""}`}>
                             {label}
                           </a>
                         ))}
@@ -176,7 +176,7 @@ export default function Header() {
                       >
                         {dropdownMap[item].map((label, i) => (
                           <a key={label} href={`/${item.toLowerCase()}/${label.toLowerCase().replace(/\s+/g, "-")}`}
-                            className={`relative block px-6 py-5 font-normal text-[#6a6c74] text-[13px] tracking-[1px] uppercase transition-all duration-200 opacity-50 hover:opacity-100 hover:font-bold hover:bg-[#f9f7f4] ${i > 0 ? "border-t border-[#e8e8ea]" : ""}`}>
+                            className={`relative block px-6 py-5 font-normal text-[#6a6c74] text-[13px] tracking-[1px] uppercase transition-all duration-200 opacity-75 hover:opacity-100 hover:font-bold hover:bg-[#f9f7f4] ${i > 0 ? "border-t border-[#e8e8ea]" : ""}`}>
                             {label}
                           </a>
                         ))}
